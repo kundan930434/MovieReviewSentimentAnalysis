@@ -1,10 +1,13 @@
 from flask import Flask, render_template, request
 import pickle
-import nltk
 import re
+import nltk
 
 from nltk.corpus import stopwords
 from nltk.stem import PorterStemmer
+
+# Download stopwords automatically
+nltk.download('stopwords')
 
 app = Flask(__name__)
 
@@ -14,7 +17,7 @@ vectorizer = pickle.load(open('vectorizer.pkl', 'rb'))
 
 ps = PorterStemmer()
 
-# Preprocessing function
+# Clean text function
 def clean_text(text):
 
     text = re.sub('[^a-zA-Z]', ' ', text)
@@ -51,4 +54,4 @@ def predict():
     )
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=10000)
